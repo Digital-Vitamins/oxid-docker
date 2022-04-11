@@ -2,8 +2,8 @@
 //var_dump(gd_info());die();
 //phpinfo();
 
-$host = "mysql.oxid";
-$port = "3307";
+$host = "mysql-server";
+$port = "3306";
 $user = "oxid";
 $pass = "oxid";
 $db = "oxid";
