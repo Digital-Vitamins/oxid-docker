@@ -3,7 +3,7 @@ services:
   web-server:
     container_name: web-server
     build:
-      dockerfile: php.Dockerfile
+      dockerfile: ./config/docker/php/php.Dockerfile
       context: .
     restart: always
     volumes:
@@ -12,6 +12,12 @@ services:
       - ./config/apache/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
     ports:
       - 8088:80
+      - 9999:9000
+    networks:
+      - web
+    # this is needed for xdebug, to get the right ip address in etc/hosts. see https://github.com/docker/for-linux/issues/264
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   mysql-server:
     image: mysql:5.7.32
@@ -27,6 +33,10 @@ services:
       MYSQL_DATABASE: oxid
       MYSQL_USER: oxid
       MYSQL_PASSWORD: oxid
+    networks:
+      - web
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   phpmyadmin:
     container_name: php-myadmin
@@ -40,6 +50,14 @@ services:
     depends_on:
       - mysql-server
       - web-server
+    networks:
+      - web
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
 volumes:
   mysql-data:
+
+networks:
+  web:
+    external: false

@@ -44,4 +44,17 @@ RUN service apache2 restart
 
 # Post server setup
 RUN chmod -R 777 /var/www/html
-#RUN composer create-project --no-interaction oxid-esales/oxideshop-project oxid dev-b-6.4-ce
+
+# install composer
+RUN php -r 'readfile("https://getcomposer.org/installer");' > composer-setup.php \
+  && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+  && rm -f composer-setup.php \
+  && chown www-data:www-data /var/www
+
+# Create oxid eshop project
+RUN useradd -u 1000 -o -m user && groupadd -r user -g 1000 && export HOME=/home/user
+USER user
+#RUN cd /var/www/html && COMPOSER_MEMORY_LIMIT=-1 \
+#    composer create-project --no-interaction oxid-esales/oxideshop-project oxid dev-b-6.4-ce
+
+RUN touch test_1.txt
