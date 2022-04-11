@@ -1,6 +1,4 @@
 <?php
-//var_dump(gd_info());die();
-//phpinfo();
 
 $host = "mysql-server";
 $port = "3306";
