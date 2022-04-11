@@ -1,4 +1,4 @@
-FROM php:7.4.3-apache
+FROM php:8.0.2-apache
 
 RUN apt-get update -y
 RUN apt-get install -y software-properties-common
@@ -33,7 +33,7 @@ RUN docker-php-ext-install soap
 RUN docker-php-ext-install bcmath
 
 # XDEBUG
-RUN pecl install xdebug-2.8.1
+RUN pecl install xdebug-3.1.4
 RUN docker-php-ext-enable xdebug
 
 # cURL
